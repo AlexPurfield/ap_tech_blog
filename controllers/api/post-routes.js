@@ -24,7 +24,7 @@ router.put('/:id', withAuth, async (req, res) => {
     if (affectedRows > 0) {
       res.status(200).end();
     } else {
-      res.status(404).end();
+      res.sendStatus(404); // Use res.sendStatus(404) to send a 404 status
     }
   } catch (err) {
     res.status(500).json(err);
@@ -33,16 +33,16 @@ router.put('/:id', withAuth, async (req, res) => {
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {
-    const [affectedRows] = Post.destroy({
+    const affectedRows = await Post.destroy({
       where: {
         id: req.params.id,
       },
     });
 
     if (affectedRows > 0) {
-      res.status(200).end();
+      res.sendStatus(200); // Use res.sendStatus(200) to send a 200 status
     } else {
-      res.status(404).end();
+      res.sendStatus(404);
     }
   } catch (err) {
     res.status(500).json(err);
